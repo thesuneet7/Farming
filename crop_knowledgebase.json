@@ -1,0 +1,2851 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2025-08-22T10:49:25.755366Z",
+  "notes": "Rules reference parameters from your pipeline. Thresholds are indicative; calibrate per region/variety/stage using local advisories.",
+  "available_params": [
+    "temp",
+    "temp_min",
+    "temp_max",
+    "humidity",
+    "wind_speed",
+    "wind_gusts",
+    "precip_mm",
+    "et0",
+    "aridity_index",
+    "dtr",
+    "heat_index"
+  ],
+  "stress_types": [
+    "heat",
+    "cold",
+    "drought_aridity",
+    "waterlogging_rain",
+    "wind",
+    "humidity_disease"
+  ],
+  "crops": [
+    {
+      "name": "rice",
+      "group": "paddy",
+      "aliases": [
+        "paddy",
+        "oryza_sativa"
+      ],
+      "seasons": [
+        "kharif",
+        "rabi",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "heat_index >= 35",
+          "severity": "high",
+          "advisory": "High heat can cause spikelet sterility and poor grain filling in rice. Avoid transplanting at midday; ensure standing water 3–5 cm."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "high",
+          "advisory": "Water deficit for puddled rice. Maintain field puddling or irrigate to keep a shallow water layer."
+        },
+        {
+          "when": "precip_mm > 100 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High rain with low diurnal range increases blast/sheath blight risk. Use preventive fungicide as per local advisory."
+        },
+        {
+          "when": "temp_min < 12",
+          "severity": "medium",
+          "advisory": "Cool nights can slow tillering. Skip urea topdressing during cold nights; apply when temperatures recover."
+        },
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "medium",
+          "advisory": "Strong winds may lodge tall paddy. Keep water level 5–7 cm to anchor plants and avoid late nitrogen."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "heat_index",
+        "precip_mm",
+        "temp",
+        "temp_min",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "paddy",
+      "group": "paddy",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "rabi",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "heat_index >= 35",
+          "severity": "high",
+          "advisory": "High heat can cause spikelet sterility and poor grain filling in rice. Avoid transplanting at midday; ensure standing water 3–5 cm."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "high",
+          "advisory": "Water deficit for puddled rice. Maintain field puddling or irrigate to keep a shallow water layer."
+        },
+        {
+          "when": "precip_mm > 100 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High rain with low diurnal range increases blast/sheath blight risk. Use preventive fungicide as per local advisory."
+        },
+        {
+          "when": "temp_min < 12",
+          "severity": "medium",
+          "advisory": "Cool nights can slow tillering. Skip urea topdressing during cold nights; apply when temperatures recover."
+        },
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "medium",
+          "advisory": "Strong winds may lodge tall paddy. Keep water level 5–7 cm to anchor plants and avoid late nitrogen."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "heat_index",
+        "precip_mm",
+        "temp",
+        "temp_min",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "wheat",
+      "group": "wheat",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 35",
+          "severity": "high",
+          "advisory": "Heat during grain filling reduces test weight. Advance irrigation to cool the canopy and avoid spraying in afternoons."
+        },
+        {
+          "when": "temp_min <= 4",
+          "severity": "high",
+          "advisory": "Frost risk for wheat seedlings. Light evening irrigation or smoke can reduce frost injury."
+        },
+        {
+          "when": "humidity >= 80 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity and low DTR favour rusts. Scout and follow local fungicide schedule."
+        },
+        {
+          "when": "aridity_index < 0.6",
+          "severity": "medium",
+          "advisory": "Moisture stress at tillering/flowering. Irrigate at CRI/booting stages if possible."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "durum_wheat",
+      "group": "wheat",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 35",
+          "severity": "high",
+          "advisory": "Heat during grain filling reduces test weight. Advance irrigation to cool the canopy and avoid spraying in afternoons."
+        },
+        {
+          "when": "temp_min <= 4",
+          "severity": "high",
+          "advisory": "Frost risk for wheat seedlings. Light evening irrigation or smoke can reduce frost injury."
+        },
+        {
+          "when": "humidity >= 80 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity and low DTR favour rusts. Scout and follow local fungicide schedule."
+        },
+        {
+          "when": "aridity_index < 0.6",
+          "severity": "medium",
+          "advisory": "Moisture stress at tillering/flowering. Irrigate at CRI/booting stages if possible."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "maize",
+      "group": "maize",
+      "aliases": [
+        "corn"
+      ],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "heat_index >= 37",
+          "severity": "high",
+          "advisory": "Heat stress affects tassel-silk synchrony. Irrigate and avoid fertilizer spraying in peak heat."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "high",
+          "advisory": "Drought during tasseling/silking cuts yield. Schedule irrigation or mulch to conserve moisture."
+        },
+        {
+          "when": "wind_gusts >= 55",
+          "severity": "high",
+          "advisory": "Lodging risk for tall maize. Stake borders and avoid late nitrogen that makes plants succulent."
+        },
+        {
+          "when": "temp_min < 10",
+          "severity": "medium",
+          "advisory": "Cool nights slow growth; delay spraying oils; use protective irrigation if leaf burn seen."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "heat_index",
+        "temp",
+        "temp_min",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "corn",
+      "group": "maize",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "rules": [
+        {
+          "when": "heat_index >= 37",
+          "severity": "high",
+          "advisory": "Heat stress affects tassel-silk synchrony. Irrigate and avoid fertilizer spraying in peak heat."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "high",
+          "advisory": "Drought during tasseling/silking cuts yield. Schedule irrigation or mulch to conserve moisture."
+        },
+        {
+          "when": "wind_gusts >= 55",
+          "severity": "high",
+          "advisory": "Lodging risk for tall maize. Stake borders and avoid late nitrogen that makes plants succulent."
+        },
+        {
+          "when": "temp_min < 10",
+          "severity": "medium",
+          "advisory": "Cool nights slow growth; delay spraying oils; use protective irrigation if leaf burn seen."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "heat_index",
+        "temp",
+        "temp_min",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "sweet_corn",
+      "group": "maize",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "rules": [
+        {
+          "when": "heat_index >= 37",
+          "severity": "high",
+          "advisory": "Heat stress affects tassel-silk synchrony. Irrigate and avoid fertilizer spraying in peak heat."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "high",
+          "advisory": "Drought during tasseling/silking cuts yield. Schedule irrigation or mulch to conserve moisture."
+        },
+        {
+          "when": "wind_gusts >= 55",
+          "severity": "high",
+          "advisory": "Lodging risk for tall maize. Stake borders and avoid late nitrogen that makes plants succulent."
+        },
+        {
+          "when": "temp_min < 10",
+          "severity": "medium",
+          "advisory": "Cool nights slow growth; delay spraying oils; use protective irrigation if leaf burn seen."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "heat_index",
+        "temp",
+        "temp_min",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "baby_corn",
+      "group": "maize",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "rules": [
+        {
+          "when": "heat_index >= 37",
+          "severity": "high",
+          "advisory": "Heat stress affects tassel-silk synchrony. Irrigate and avoid fertilizer spraying in peak heat."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "high",
+          "advisory": "Drought during tasseling/silking cuts yield. Schedule irrigation or mulch to conserve moisture."
+        },
+        {
+          "when": "wind_gusts >= 55",
+          "severity": "high",
+          "advisory": "Lodging risk for tall maize. Stake borders and avoid late nitrogen that makes plants succulent."
+        },
+        {
+          "when": "temp_min < 10",
+          "severity": "medium",
+          "advisory": "Cool nights slow growth; delay spraying oils; use protective irrigation if leaf burn seen."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "heat_index",
+        "temp",
+        "temp_min",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "sorghum",
+      "group": "millets",
+      "aliases": [
+        "jowar"
+      ],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "heat_index >= 40",
+          "severity": "medium",
+          "advisory": "Millets tolerate heat but flowering can suffer. Irrigate lightly in evenings if leaves are rolling."
+        },
+        {
+          "when": "aridity_index < 0.4",
+          "severity": "high",
+          "advisory": "Severe drought. Prefer life-saving irrigation; skip non-essential operations."
+        },
+        {
+          "when": "precip_mm > 120",
+          "severity": "medium",
+          "advisory": "Waterlogging harms roots. Drain excess water quickly."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "heat_index",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "pearl_millet",
+      "group": "millets",
+      "aliases": [
+        "bajra"
+      ],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "heat_index >= 40",
+          "severity": "medium",
+          "advisory": "Millets tolerate heat but flowering can suffer. Irrigate lightly in evenings if leaves are rolling."
+        },
+        {
+          "when": "aridity_index < 0.4",
+          "severity": "high",
+          "advisory": "Severe drought. Prefer life-saving irrigation; skip non-essential operations."
+        },
+        {
+          "when": "precip_mm > 120",
+          "severity": "medium",
+          "advisory": "Waterlogging harms roots. Drain excess water quickly."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "heat_index",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "finger_millet",
+      "group": "millets",
+      "aliases": [
+        "ragi"
+      ],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "heat_index >= 40",
+          "severity": "medium",
+          "advisory": "Millets tolerate heat but flowering can suffer. Irrigate lightly in evenings if leaves are rolling."
+        },
+        {
+          "when": "aridity_index < 0.4",
+          "severity": "high",
+          "advisory": "Severe drought. Prefer life-saving irrigation; skip non-essential operations."
+        },
+        {
+          "when": "precip_mm > 120",
+          "severity": "medium",
+          "advisory": "Waterlogging harms roots. Drain excess water quickly."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "heat_index",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "foxtail_millet",
+      "group": "millets",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "heat_index >= 40",
+          "severity": "medium",
+          "advisory": "Millets tolerate heat but flowering can suffer. Irrigate lightly in evenings if leaves are rolling."
+        },
+        {
+          "when": "aridity_index < 0.4",
+          "severity": "high",
+          "advisory": "Severe drought. Prefer life-saving irrigation; skip non-essential operations."
+        },
+        {
+          "when": "precip_mm > 120",
+          "severity": "medium",
+          "advisory": "Waterlogging harms roots. Drain excess water quickly."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "heat_index",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "little_millet",
+      "group": "millets",
+      "aliases": [
+        "kutki"
+      ],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "heat_index >= 40",
+          "severity": "medium",
+          "advisory": "Millets tolerate heat but flowering can suffer. Irrigate lightly in evenings if leaves are rolling."
+        },
+        {
+          "when": "aridity_index < 0.4",
+          "severity": "high",
+          "advisory": "Severe drought. Prefer life-saving irrigation; skip non-essential operations."
+        },
+        {
+          "when": "precip_mm > 120",
+          "severity": "medium",
+          "advisory": "Waterlogging harms roots. Drain excess water quickly."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "heat_index",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "kodo_millet",
+      "group": "millets",
+      "aliases": [
+        "kodo"
+      ],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "heat_index >= 40",
+          "severity": "medium",
+          "advisory": "Millets tolerate heat but flowering can suffer. Irrigate lightly in evenings if leaves are rolling."
+        },
+        {
+          "when": "aridity_index < 0.4",
+          "severity": "high",
+          "advisory": "Severe drought. Prefer life-saving irrigation; skip non-essential operations."
+        },
+        {
+          "when": "precip_mm > 120",
+          "severity": "medium",
+          "advisory": "Waterlogging harms roots. Drain excess water quickly."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "heat_index",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "barnyard_millet",
+      "group": "millets",
+      "aliases": [
+        "sanwa"
+      ],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "heat_index >= 40",
+          "severity": "medium",
+          "advisory": "Millets tolerate heat but flowering can suffer. Irrigate lightly in evenings if leaves are rolling."
+        },
+        {
+          "when": "aridity_index < 0.4",
+          "severity": "high",
+          "advisory": "Severe drought. Prefer life-saving irrigation; skip non-essential operations."
+        },
+        {
+          "when": "precip_mm > 120",
+          "severity": "medium",
+          "advisory": "Waterlogging harms roots. Drain excess water quickly."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "heat_index",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "proso_millet",
+      "group": "millets",
+      "aliases": [
+        "cheena"
+      ],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "heat_index >= 40",
+          "severity": "medium",
+          "advisory": "Millets tolerate heat but flowering can suffer. Irrigate lightly in evenings if leaves are rolling."
+        },
+        {
+          "when": "aridity_index < 0.4",
+          "severity": "high",
+          "advisory": "Severe drought. Prefer life-saving irrigation; skip non-essential operations."
+        },
+        {
+          "when": "precip_mm > 120",
+          "severity": "medium",
+          "advisory": "Waterlogging harms roots. Drain excess water quickly."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "heat_index",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "chickpea",
+      "group": "pulses",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 35",
+          "severity": "high",
+          "advisory": "Heat during flowering causes flower drop. Irrigate lightly and avoid canopy-disturbing operations."
+        },
+        {
+          "when": "aridity_index < 0.6",
+          "severity": "high",
+          "advisory": "Soil moisture deficit during pod fill. Provide irrigation if feasible; mulch to reduce loss."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging predisposes to root rots. Improve drainage and avoid standing water."
+        },
+        {
+          "when": "temp_min <= 5",
+          "severity": "medium",
+          "advisory": "Cold can stunt pulses; delay pesticide sprays until warmer hours."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "pigeon_pea",
+      "group": "pulses",
+      "aliases": [
+        "tur",
+        "arhar",
+        "pigeonpea"
+      ],
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 35",
+          "severity": "high",
+          "advisory": "Heat during flowering causes flower drop. Irrigate lightly and avoid canopy-disturbing operations."
+        },
+        {
+          "when": "aridity_index < 0.6",
+          "severity": "high",
+          "advisory": "Soil moisture deficit during pod fill. Provide irrigation if feasible; mulch to reduce loss."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging predisposes to root rots. Improve drainage and avoid standing water."
+        },
+        {
+          "when": "temp_min <= 5",
+          "severity": "medium",
+          "advisory": "Cold can stunt pulses; delay pesticide sprays until warmer hours."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "mung_bean",
+      "group": "pulses",
+      "aliases": [
+        "moong",
+        "green_gram"
+      ],
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 35",
+          "severity": "high",
+          "advisory": "Heat during flowering causes flower drop. Irrigate lightly and avoid canopy-disturbing operations."
+        },
+        {
+          "when": "aridity_index < 0.6",
+          "severity": "high",
+          "advisory": "Soil moisture deficit during pod fill. Provide irrigation if feasible; mulch to reduce loss."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging predisposes to root rots. Improve drainage and avoid standing water."
+        },
+        {
+          "when": "temp_min <= 5",
+          "severity": "medium",
+          "advisory": "Cold can stunt pulses; delay pesticide sprays until warmer hours."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "urad_bean",
+      "group": "pulses",
+      "aliases": [
+        "urad",
+        "black_gram"
+      ],
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 35",
+          "severity": "high",
+          "advisory": "Heat during flowering causes flower drop. Irrigate lightly and avoid canopy-disturbing operations."
+        },
+        {
+          "when": "aridity_index < 0.6",
+          "severity": "high",
+          "advisory": "Soil moisture deficit during pod fill. Provide irrigation if feasible; mulch to reduce loss."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging predisposes to root rots. Improve drainage and avoid standing water."
+        },
+        {
+          "when": "temp_min <= 5",
+          "severity": "medium",
+          "advisory": "Cold can stunt pulses; delay pesticide sprays until warmer hours."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "lentil",
+      "group": "pulses",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 35",
+          "severity": "high",
+          "advisory": "Heat during flowering causes flower drop. Irrigate lightly and avoid canopy-disturbing operations."
+        },
+        {
+          "when": "aridity_index < 0.6",
+          "severity": "high",
+          "advisory": "Soil moisture deficit during pod fill. Provide irrigation if feasible; mulch to reduce loss."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging predisposes to root rots. Improve drainage and avoid standing water."
+        },
+        {
+          "when": "temp_min <= 5",
+          "severity": "medium",
+          "advisory": "Cold can stunt pulses; delay pesticide sprays until warmer hours."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "field_pea",
+      "group": "pulses",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 35",
+          "severity": "high",
+          "advisory": "Heat during flowering causes flower drop. Irrigate lightly and avoid canopy-disturbing operations."
+        },
+        {
+          "when": "aridity_index < 0.6",
+          "severity": "high",
+          "advisory": "Soil moisture deficit during pod fill. Provide irrigation if feasible; mulch to reduce loss."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging predisposes to root rots. Improve drainage and avoid standing water."
+        },
+        {
+          "when": "temp_min <= 5",
+          "severity": "medium",
+          "advisory": "Cold can stunt pulses; delay pesticide sprays until warmer hours."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "cowpea",
+      "group": "pulses",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 35",
+          "severity": "high",
+          "advisory": "Heat during flowering causes flower drop. Irrigate lightly and avoid canopy-disturbing operations."
+        },
+        {
+          "when": "aridity_index < 0.6",
+          "severity": "high",
+          "advisory": "Soil moisture deficit during pod fill. Provide irrigation if feasible; mulch to reduce loss."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging predisposes to root rots. Improve drainage and avoid standing water."
+        },
+        {
+          "when": "temp_min <= 5",
+          "severity": "medium",
+          "advisory": "Cold can stunt pulses; delay pesticide sprays until warmer hours."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "rajma_kidney_bean",
+      "group": "pulses",
+      "aliases": [
+        "rajma",
+        "kidney_bean"
+      ],
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 35",
+          "severity": "high",
+          "advisory": "Heat during flowering causes flower drop. Irrigate lightly and avoid canopy-disturbing operations."
+        },
+        {
+          "when": "aridity_index < 0.6",
+          "severity": "high",
+          "advisory": "Soil moisture deficit during pod fill. Provide irrigation if feasible; mulch to reduce loss."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging predisposes to root rots. Improve drainage and avoid standing water."
+        },
+        {
+          "when": "temp_min <= 5",
+          "severity": "medium",
+          "advisory": "Cold can stunt pulses; delay pesticide sprays until warmer hours."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "groundnut",
+      "group": "oilseeds_groundnut",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 38",
+          "severity": "high",
+          "advisory": "High heat affects pegging. Irrigate and avoid weeding during peak heat hours."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "high",
+          "advisory": "Moisture deficit limits pod filling. Schedule irrigation; consider gypsum topdress if at pegging."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "high",
+          "advisory": "Waterlogging causes yellowing and rots. Provide drainage within 24 hours."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "temp",
+        "temp_max"
+      ]
+    },
+    {
+      "name": "peanut",
+      "group": "oilseeds_groundnut",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 38",
+          "severity": "high",
+          "advisory": "High heat affects pegging. Irrigate and avoid weeding during peak heat hours."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "high",
+          "advisory": "Moisture deficit limits pod filling. Schedule irrigation; consider gypsum topdress if at pegging."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "high",
+          "advisory": "Waterlogging causes yellowing and rots. Provide drainage within 24 hours."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "temp",
+        "temp_max"
+      ]
+    },
+    {
+      "name": "mustard",
+      "group": "oilseeds_mustard",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 2",
+          "severity": "high",
+          "advisory": "Frost injury risk in mustard. Light evening irrigation can reduce frost damage."
+        },
+        {
+          "when": "temp_max >= 35",
+          "severity": "medium",
+          "advisory": "Heat shortens flowering and reduces siliqua set. Irrigate at flowering if possible."
+        },
+        {
+          "when": "humidity >= 80 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity favours alternaria/white rust. Scout and act per advisories."
+        }
+      ],
+      "params_used": [
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "rapeseed",
+      "group": "oilseeds_mustard",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 2",
+          "severity": "high",
+          "advisory": "Frost injury risk in mustard. Light evening irrigation can reduce frost damage."
+        },
+        {
+          "when": "temp_max >= 35",
+          "severity": "medium",
+          "advisory": "Heat shortens flowering and reduces siliqua set. Irrigate at flowering if possible."
+        },
+        {
+          "when": "humidity >= 80 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity favours alternaria/white rust. Scout and act per advisories."
+        }
+      ],
+      "params_used": [
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "toria",
+      "group": "oilseeds_mustard",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 2",
+          "severity": "high",
+          "advisory": "Frost injury risk in mustard. Light evening irrigation can reduce frost damage."
+        },
+        {
+          "when": "temp_max >= 35",
+          "severity": "medium",
+          "advisory": "Heat shortens flowering and reduces siliqua set. Irrigate at flowering if possible."
+        },
+        {
+          "when": "humidity >= 80 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity favours alternaria/white rust. Scout and act per advisories."
+        }
+      ],
+      "params_used": [
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "safflower",
+      "group": "oilseeds_mustard",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "rabi"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 2",
+          "severity": "high",
+          "advisory": "Frost injury risk in mustard. Light evening irrigation can reduce frost damage."
+        },
+        {
+          "when": "temp_max >= 35",
+          "severity": "medium",
+          "advisory": "Heat shortens flowering and reduces siliqua set. Irrigate at flowering if possible."
+        },
+        {
+          "when": "humidity >= 80 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity favours alternaria/white rust. Scout and act per advisories."
+        }
+      ],
+      "params_used": [
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "soybean",
+      "group": "soybean",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "precip_mm >= 100",
+          "severity": "high",
+          "advisory": "Waterlogging severely harms soybean. Create field drains; avoid traffic on wet soil."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Moisture stress near flowering/pod set. Irrigate if available; conserve moisture with mulch."
+        },
+        {
+          "when": "temp_max >= 38",
+          "severity": "medium",
+          "advisory": "High heat reduces pod set. Avoid foliar sprays in hot afternoons."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "temp",
+        "temp_max"
+      ]
+    },
+    {
+      "name": "cotton",
+      "group": "cotton",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 40",
+          "severity": "high",
+          "advisory": "Heat stress leads to boll shed. Irrigate and apply K-rich nutrition as per schedule."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "medium",
+          "advisory": "Moisture stress promotes boll drop and mealybugs. Irrigate; maintain field sanitation."
+        },
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "high",
+          "advisory": "Lodging/breakage risk. Provide staking on borders and avoid late growth flushes."
+        },
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Waterlogging increases wilt risk. Improve drainage promptly."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "sugarcane",
+      "group": "sugarcane",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "high",
+          "advisory": "Lodging risk for tall cane. Tie trash, earth up, and provide windbreaks."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Moisture stress reduces cane elongation. Irrigate as per IW/CPE; mulch with trash."
+        },
+        {
+          "when": "temp_min < 12",
+          "severity": "low",
+          "advisory": "Cool nights slow growth; avoid heavy nitrogen during cold spells."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "temp",
+        "temp_min",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "tomato",
+      "group": "vegetables_warm",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 38",
+          "severity": "high",
+          "advisory": "Heat reduces fruit set and quality. Provide shade nets or evening irrigation."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "medium",
+          "advisory": "Moisture stress affects tender vegetables. Maintain even moisture; mulch around plants."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity favours blights/mildews. Ensure airflow; use recommended sprays."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max"
+      ]
+    },
+    {
+      "name": "brinjal_eggplant",
+      "group": "vegetables_warm",
+      "aliases": [
+        "eggplant",
+        "brinjal",
+        "aubergine"
+      ],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 38",
+          "severity": "high",
+          "advisory": "Heat reduces fruit set and quality. Provide shade nets or evening irrigation."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "medium",
+          "advisory": "Moisture stress affects tender vegetables. Maintain even moisture; mulch around plants."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity favours blights/mildews. Ensure airflow; use recommended sprays."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max"
+      ]
+    },
+    {
+      "name": "chili_pepper",
+      "group": "vegetables_warm",
+      "aliases": [
+        "chilli",
+        "hot_pepper"
+      ],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 38",
+          "severity": "high",
+          "advisory": "Heat reduces fruit set and quality. Provide shade nets or evening irrigation."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "medium",
+          "advisory": "Moisture stress affects tender vegetables. Maintain even moisture; mulch around plants."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity favours blights/mildews. Ensure airflow; use recommended sprays."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max"
+      ]
+    },
+    {
+      "name": "capsicum",
+      "group": "vegetables_warm",
+      "aliases": [
+        "bell_pepper",
+        "sweet_pepper"
+      ],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 38",
+          "severity": "high",
+          "advisory": "Heat reduces fruit set and quality. Provide shade nets or evening irrigation."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "medium",
+          "advisory": "Moisture stress affects tender vegetables. Maintain even moisture; mulch around plants."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity favours blights/mildews. Ensure airflow; use recommended sprays."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max"
+      ]
+    },
+    {
+      "name": "okra",
+      "group": "vegetables_warm",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 38",
+          "severity": "high",
+          "advisory": "Heat reduces fruit set and quality. Provide shade nets or evening irrigation."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "medium",
+          "advisory": "Moisture stress affects tender vegetables. Maintain even moisture; mulch around plants."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity favours blights/mildews. Ensure airflow; use recommended sprays."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max"
+      ]
+    },
+    {
+      "name": "cucumber",
+      "group": "vegetables_warm",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 38",
+          "severity": "high",
+          "advisory": "Heat reduces fruit set and quality. Provide shade nets or evening irrigation."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "medium",
+          "advisory": "Moisture stress affects tender vegetables. Maintain even moisture; mulch around plants."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity favours blights/mildews. Ensure airflow; use recommended sprays."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max"
+      ]
+    },
+    {
+      "name": "pumpkin",
+      "group": "vegetables_warm",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 38",
+          "severity": "high",
+          "advisory": "Heat reduces fruit set and quality. Provide shade nets or evening irrigation."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "medium",
+          "advisory": "Moisture stress affects tender vegetables. Maintain even moisture; mulch around plants."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity favours blights/mildews. Ensure airflow; use recommended sprays."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max"
+      ]
+    },
+    {
+      "name": "bottle_gourd",
+      "group": "vegetables_warm",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 38",
+          "severity": "high",
+          "advisory": "Heat reduces fruit set and quality. Provide shade nets or evening irrigation."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "medium",
+          "advisory": "Moisture stress affects tender vegetables. Maintain even moisture; mulch around plants."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity favours blights/mildews. Ensure airflow; use recommended sprays."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max"
+      ]
+    },
+    {
+      "name": "bitter_gourd",
+      "group": "vegetables_warm",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 38",
+          "severity": "high",
+          "advisory": "Heat reduces fruit set and quality. Provide shade nets or evening irrigation."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "medium",
+          "advisory": "Moisture stress affects tender vegetables. Maintain even moisture; mulch around plants."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity favours blights/mildews. Ensure airflow; use recommended sprays."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max"
+      ]
+    },
+    {
+      "name": "ridge_gourd",
+      "group": "vegetables_warm",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 38",
+          "severity": "high",
+          "advisory": "Heat reduces fruit set and quality. Provide shade nets or evening irrigation."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "medium",
+          "advisory": "Moisture stress affects tender vegetables. Maintain even moisture; mulch around plants."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity favours blights/mildews. Ensure airflow; use recommended sprays."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max"
+      ]
+    },
+    {
+      "name": "watermelon",
+      "group": "vegetables_warm",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 38",
+          "severity": "high",
+          "advisory": "Heat reduces fruit set and quality. Provide shade nets or evening irrigation."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "medium",
+          "advisory": "Moisture stress affects tender vegetables. Maintain even moisture; mulch around plants."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity favours blights/mildews. Ensure airflow; use recommended sprays."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max"
+      ]
+    },
+    {
+      "name": "muskmelon",
+      "group": "vegetables_warm",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 38",
+          "severity": "high",
+          "advisory": "Heat reduces fruit set and quality. Provide shade nets or evening irrigation."
+        },
+        {
+          "when": "aridity_index < 0.7",
+          "severity": "medium",
+          "advisory": "Moisture stress affects tender vegetables. Maintain even moisture; mulch around plants."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity favours blights/mildews. Ensure airflow; use recommended sprays."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "temp",
+        "temp_max"
+      ]
+    },
+    {
+      "name": "potato",
+      "group": "vegetables_cool",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 4",
+          "severity": "high",
+          "advisory": "Frost risk for cool-season vegetables. Use row covers/smoke or light irrigation at night."
+        },
+        {
+          "when": "temp_max >= 32",
+          "severity": "medium",
+          "advisory": "Unseasonal heat causes bolting or poor head formation. Irrigate and harvest early mornings."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging damages roots. Improve drainage."
+        }
+      ],
+      "params_used": [
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "onion",
+      "group": "vegetables_cool",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 4",
+          "severity": "high",
+          "advisory": "Frost risk for cool-season vegetables. Use row covers/smoke or light irrigation at night."
+        },
+        {
+          "when": "temp_max >= 32",
+          "severity": "medium",
+          "advisory": "Unseasonal heat causes bolting or poor head formation. Irrigate and harvest early mornings."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging damages roots. Improve drainage."
+        }
+      ],
+      "params_used": [
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "garlic",
+      "group": "vegetables_cool",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 4",
+          "severity": "high",
+          "advisory": "Frost risk for cool-season vegetables. Use row covers/smoke or light irrigation at night."
+        },
+        {
+          "when": "temp_max >= 32",
+          "severity": "medium",
+          "advisory": "Unseasonal heat causes bolting or poor head formation. Irrigate and harvest early mornings."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging damages roots. Improve drainage."
+        }
+      ],
+      "params_used": [
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "cabbage",
+      "group": "vegetables_cool",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 4",
+          "severity": "high",
+          "advisory": "Frost risk for cool-season vegetables. Use row covers/smoke or light irrigation at night."
+        },
+        {
+          "when": "temp_max >= 32",
+          "severity": "medium",
+          "advisory": "Unseasonal heat causes bolting or poor head formation. Irrigate and harvest early mornings."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging damages roots. Improve drainage."
+        }
+      ],
+      "params_used": [
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "cauliflower",
+      "group": "vegetables_cool",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 4",
+          "severity": "high",
+          "advisory": "Frost risk for cool-season vegetables. Use row covers/smoke or light irrigation at night."
+        },
+        {
+          "when": "temp_max >= 32",
+          "severity": "medium",
+          "advisory": "Unseasonal heat causes bolting or poor head formation. Irrigate and harvest early mornings."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging damages roots. Improve drainage."
+        }
+      ],
+      "params_used": [
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "broccoli",
+      "group": "vegetables_cool",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 4",
+          "severity": "high",
+          "advisory": "Frost risk for cool-season vegetables. Use row covers/smoke or light irrigation at night."
+        },
+        {
+          "when": "temp_max >= 32",
+          "severity": "medium",
+          "advisory": "Unseasonal heat causes bolting or poor head formation. Irrigate and harvest early mornings."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging damages roots. Improve drainage."
+        }
+      ],
+      "params_used": [
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "carrot",
+      "group": "vegetables_cool",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 4",
+          "severity": "high",
+          "advisory": "Frost risk for cool-season vegetables. Use row covers/smoke or light irrigation at night."
+        },
+        {
+          "when": "temp_max >= 32",
+          "severity": "medium",
+          "advisory": "Unseasonal heat causes bolting or poor head formation. Irrigate and harvest early mornings."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging damages roots. Improve drainage."
+        }
+      ],
+      "params_used": [
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "beetroot",
+      "group": "vegetables_cool",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 4",
+          "severity": "high",
+          "advisory": "Frost risk for cool-season vegetables. Use row covers/smoke or light irrigation at night."
+        },
+        {
+          "when": "temp_max >= 32",
+          "severity": "medium",
+          "advisory": "Unseasonal heat causes bolting or poor head formation. Irrigate and harvest early mornings."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging damages roots. Improve drainage."
+        }
+      ],
+      "params_used": [
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "radish",
+      "group": "vegetables_cool",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 4",
+          "severity": "high",
+          "advisory": "Frost risk for cool-season vegetables. Use row covers/smoke or light irrigation at night."
+        },
+        {
+          "when": "temp_max >= 32",
+          "severity": "medium",
+          "advisory": "Unseasonal heat causes bolting or poor head formation. Irrigate and harvest early mornings."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging damages roots. Improve drainage."
+        }
+      ],
+      "params_used": [
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "peas_green",
+      "group": "vegetables_cool",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 4",
+          "severity": "high",
+          "advisory": "Frost risk for cool-season vegetables. Use row covers/smoke or light irrigation at night."
+        },
+        {
+          "when": "temp_max >= 32",
+          "severity": "medium",
+          "advisory": "Unseasonal heat causes bolting or poor head formation. Irrigate and harvest early mornings."
+        },
+        {
+          "when": "precip_mm >= 80",
+          "severity": "medium",
+          "advisory": "Waterlogging damages roots. Improve drainage."
+        }
+      ],
+      "params_used": [
+        "precip_mm",
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "banana",
+      "group": "fruits_tropical",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "high",
+          "advisory": "Wind can snap branches and scar fruits. Prune sails and stake young trees."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Dry spell during flowering/fruit set reduces yield. Irrigate or mulch basins."
+        },
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Heavy rains increase fruit rots. Ensure drainage and orchard sanitation."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "mango",
+      "group": "fruits_tropical",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "high",
+          "advisory": "Wind can snap branches and scar fruits. Prune sails and stake young trees."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Dry spell during flowering/fruit set reduces yield. Irrigate or mulch basins."
+        },
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Heavy rains increase fruit rots. Ensure drainage and orchard sanitation."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "papaya",
+      "group": "fruits_tropical",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "high",
+          "advisory": "Wind can snap branches and scar fruits. Prune sails and stake young trees."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Dry spell during flowering/fruit set reduces yield. Irrigate or mulch basins."
+        },
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Heavy rains increase fruit rots. Ensure drainage and orchard sanitation."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "pomegranate",
+      "group": "fruits_tropical",
+      "aliases": [
+        "anar"
+      ],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "high",
+          "advisory": "Wind can snap branches and scar fruits. Prune sails and stake young trees."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Dry spell during flowering/fruit set reduces yield. Irrigate or mulch basins."
+        },
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Heavy rains increase fruit rots. Ensure drainage and orchard sanitation."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "guava",
+      "group": "fruits_tropical",
+      "aliases": [
+        "amrud"
+      ],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "high",
+          "advisory": "Wind can snap branches and scar fruits. Prune sails and stake young trees."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Dry spell during flowering/fruit set reduces yield. Irrigate or mulch basins."
+        },
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Heavy rains increase fruit rots. Ensure drainage and orchard sanitation."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "sapota_chikoo",
+      "group": "fruits_tropical",
+      "aliases": [
+        "sapodilla",
+        "chiku"
+      ],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "high",
+          "advisory": "Wind can snap branches and scar fruits. Prune sails and stake young trees."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Dry spell during flowering/fruit set reduces yield. Irrigate or mulch basins."
+        },
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Heavy rains increase fruit rots. Ensure drainage and orchard sanitation."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "jackfruit",
+      "group": "fruits_tropical",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "high",
+          "advisory": "Wind can snap branches and scar fruits. Prune sails and stake young trees."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Dry spell during flowering/fruit set reduces yield. Irrigate or mulch basins."
+        },
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Heavy rains increase fruit rots. Ensure drainage and orchard sanitation."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "precip_mm",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "citrus",
+      "group": "fruits_subtropical",
+      "aliases": [
+        "mandarin",
+        "kinnow",
+        "citrus_mixed"
+      ],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 2",
+          "severity": "high",
+          "advisory": "Frost risk for young trees. Whitewash trunks, irrigate in evening, and use covers where possible."
+        },
+        {
+          "when": "temp_max >= 38",
+          "severity": "medium",
+          "advisory": "Heat scorch on leaves/fruit. Provide shade cloth or kaolin sprays per advisories."
+        }
+      ],
+      "params_used": [
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "orange",
+      "group": "fruits_subtropical",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 2",
+          "severity": "high",
+          "advisory": "Frost risk for young trees. Whitewash trunks, irrigate in evening, and use covers where possible."
+        },
+        {
+          "when": "temp_max >= 38",
+          "severity": "medium",
+          "advisory": "Heat scorch on leaves/fruit. Provide shade cloth or kaolin sprays per advisories."
+        }
+      ],
+      "params_used": [
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "lemon",
+      "group": "fruits_subtropical",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 2",
+          "severity": "high",
+          "advisory": "Frost risk for young trees. Whitewash trunks, irrigate in evening, and use covers where possible."
+        },
+        {
+          "when": "temp_max >= 38",
+          "severity": "medium",
+          "advisory": "Heat scorch on leaves/fruit. Provide shade cloth or kaolin sprays per advisories."
+        }
+      ],
+      "params_used": [
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "lime",
+      "group": "fruits_subtropical",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 2",
+          "severity": "high",
+          "advisory": "Frost risk for young trees. Whitewash trunks, irrigate in evening, and use covers where possible."
+        },
+        {
+          "when": "temp_max >= 38",
+          "severity": "medium",
+          "advisory": "Heat scorch on leaves/fruit. Provide shade cloth or kaolin sprays per advisories."
+        }
+      ],
+      "params_used": [
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "grape",
+      "group": "fruits_subtropical",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 2",
+          "severity": "high",
+          "advisory": "Frost risk for young trees. Whitewash trunks, irrigate in evening, and use covers where possible."
+        },
+        {
+          "when": "temp_max >= 38",
+          "severity": "medium",
+          "advisory": "Heat scorch on leaves/fruit. Provide shade cloth or kaolin sprays per advisories."
+        }
+      ],
+      "params_used": [
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "apple",
+      "group": "fruits_subtropical",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 2",
+          "severity": "high",
+          "advisory": "Frost risk for young trees. Whitewash trunks, irrigate in evening, and use covers where possible."
+        },
+        {
+          "when": "temp_max >= 38",
+          "severity": "medium",
+          "advisory": "Heat scorch on leaves/fruit. Provide shade cloth or kaolin sprays per advisories."
+        }
+      ],
+      "params_used": [
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "pear",
+      "group": "fruits_subtropical",
+      "aliases": [],
+      "seasons": [
+        "rabi",
+        "winter"
+      ],
+      "rules": [
+        {
+          "when": "temp_min <= 2",
+          "severity": "high",
+          "advisory": "Frost risk for young trees. Whitewash trunks, irrigate in evening, and use covers where possible."
+        },
+        {
+          "when": "temp_max >= 38",
+          "severity": "medium",
+          "advisory": "Heat scorch on leaves/fruit. Provide shade cloth or kaolin sprays per advisories."
+        }
+      ],
+      "params_used": [
+        "temp",
+        "temp_max",
+        "temp_min"
+      ]
+    },
+    {
+      "name": "turmeric",
+      "group": "spices",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Waterlogging increases rhizome rots. Keep drains open and mulch judiciously."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Dry spell reduces rhizome/seed fill. Provide basin irrigation if possible."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity fosters fungal diseases. Improve airflow and follow protection schedules."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "ginger",
+      "group": "spices",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Waterlogging increases rhizome rots. Keep drains open and mulch judiciously."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Dry spell reduces rhizome/seed fill. Provide basin irrigation if possible."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity fosters fungal diseases. Improve airflow and follow protection schedules."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "coriander",
+      "group": "spices",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Waterlogging increases rhizome rots. Keep drains open and mulch judiciously."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Dry spell reduces rhizome/seed fill. Provide basin irrigation if possible."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity fosters fungal diseases. Improve airflow and follow protection schedules."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "cumin",
+      "group": "spices",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Waterlogging increases rhizome rots. Keep drains open and mulch judiciously."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Dry spell reduces rhizome/seed fill. Provide basin irrigation if possible."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity fosters fungal diseases. Improve airflow and follow protection schedules."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "fennel",
+      "group": "spices",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Waterlogging increases rhizome rots. Keep drains open and mulch judiciously."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Dry spell reduces rhizome/seed fill. Provide basin irrigation if possible."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity fosters fungal diseases. Improve airflow and follow protection schedules."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "fenugreek",
+      "group": "spices",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Waterlogging increases rhizome rots. Keep drains open and mulch judiciously."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Dry spell reduces rhizome/seed fill. Provide basin irrigation if possible."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity fosters fungal diseases. Improve airflow and follow protection schedules."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "cardamom",
+      "group": "spices",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Waterlogging increases rhizome rots. Keep drains open and mulch judiciously."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Dry spell reduces rhizome/seed fill. Provide basin irrigation if possible."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity fosters fungal diseases. Improve airflow and follow protection schedules."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "black_pepper",
+      "group": "spices",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Waterlogging increases rhizome rots. Keep drains open and mulch judiciously."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Dry spell reduces rhizome/seed fill. Provide basin irrigation if possible."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity fosters fungal diseases. Improve airflow and follow protection schedules."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "clove",
+      "group": "spices",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "precip_mm >= 120",
+          "severity": "medium",
+          "advisory": "Waterlogging increases rhizome rots. Keep drains open and mulch judiciously."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Dry spell reduces rhizome/seed fill. Provide basin irrigation if possible."
+        },
+        {
+          "when": "humidity >= 85 and dtr < 8",
+          "severity": "medium",
+          "advisory": "High humidity fosters fungal diseases. Improve airflow and follow protection schedules."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "dtr",
+        "humidity",
+        "precip_mm"
+      ]
+    },
+    {
+      "name": "tea",
+      "group": "plantation",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 35",
+          "severity": "medium",
+          "advisory": "Heat stress lowers quality. Provide shade and maintain mulch/moisture."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Moisture deficit reduces flush. Schedule irrigation if feasible."
+        },
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "medium",
+          "advisory": "Wind damage risk. Maintain windbreaks; tie young plants."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "temp",
+        "temp_max",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "coffee",
+      "group": "plantation",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 35",
+          "severity": "medium",
+          "advisory": "Heat stress lowers quality. Provide shade and maintain mulch/moisture."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Moisture deficit reduces flush. Schedule irrigation if feasible."
+        },
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "medium",
+          "advisory": "Wind damage risk. Maintain windbreaks; tie young plants."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "temp",
+        "temp_max",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "cocoa",
+      "group": "plantation",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 35",
+          "severity": "medium",
+          "advisory": "Heat stress lowers quality. Provide shade and maintain mulch/moisture."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Moisture deficit reduces flush. Schedule irrigation if feasible."
+        },
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "medium",
+          "advisory": "Wind damage risk. Maintain windbreaks; tie young plants."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "temp",
+        "temp_max",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "rubber",
+      "group": "plantation",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 35",
+          "severity": "medium",
+          "advisory": "Heat stress lowers quality. Provide shade and maintain mulch/moisture."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Moisture deficit reduces flush. Schedule irrigation if feasible."
+        },
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "medium",
+          "advisory": "Wind damage risk. Maintain windbreaks; tie young plants."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "temp",
+        "temp_max",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "arecanut",
+      "group": "plantation",
+      "aliases": [
+        "areca_nut",
+        "supari"
+      ],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 35",
+          "severity": "medium",
+          "advisory": "Heat stress lowers quality. Provide shade and maintain mulch/moisture."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Moisture deficit reduces flush. Schedule irrigation if feasible."
+        },
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "medium",
+          "advisory": "Wind damage risk. Maintain windbreaks; tie young plants."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "temp",
+        "temp_max",
+        "wind_gusts"
+      ]
+    },
+    {
+      "name": "coconut",
+      "group": "plantation",
+      "aliases": [],
+      "seasons": [
+        "kharif",
+        "summer"
+      ],
+      "rules": [
+        {
+          "when": "temp_max >= 35",
+          "severity": "medium",
+          "advisory": "Heat stress lowers quality. Provide shade and maintain mulch/moisture."
+        },
+        {
+          "when": "aridity_index < 0.8",
+          "severity": "medium",
+          "advisory": "Moisture deficit reduces flush. Schedule irrigation if feasible."
+        },
+        {
+          "when": "wind_gusts >= 60",
+          "severity": "medium",
+          "advisory": "Wind damage risk. Maintain windbreaks; tie young plants."
+        }
+      ],
+      "params_used": [
+        "aridity_index",
+        "temp",
+        "temp_max",
+        "wind_gusts"
+      ]
+    }
+  ]
+}
