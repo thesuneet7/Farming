@@ -1,0 +1,22 @@
+{
+    "name": "get_dealers_for_market",
+    "description": "FINAL STEP. Use this tool only after you have a specific market name from the 'get_available_markets' tool. It retrieves a detailed list of seed dealers, including their names and contact info, for that one market.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "The full name of the state, e.g., 'Uttar Pradesh'."
+        },
+        "district": {
+          "type": "string",
+          "description": "The full name of the district, e.g., 'Kanpur Nagar'."
+        },
+        "market": {
+          "type": "string",
+          "description": "The exact name of the market, chosen from the list provided by the 'get_available_markets' tool."
+        }
+      },
+      "required": ["state", "district", "market"]
+    }
+  }
