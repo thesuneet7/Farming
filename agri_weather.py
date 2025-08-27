@@ -1,32 +1,28 @@
-# agri_tool.py
+# agri_weather.py
 
 import os
 import requests
 import numpy as np
 import pandas as pd
 import json
-from typing import Dict, Any
-from dotenv import load_dotenv  # <-- 1. IMPORT THE LIBRARY
+from typing import List, Dict, Any
+from dotenv import load_dotenv
 
 load_dotenv()
-
-# It's best practice to get API keys from environment variables
-# Before running, in your terminal: export OWM_API_KEY="your_key_here"
 OWM_API_KEY = os.getenv("OWM_API_KEY")
 
-def get_agri_weather_forecast(district: str, crop_name: str) -> Dict[str, Any]:
+def get_agri_weather_forecast(district: str, crop_name: str) -> List[Dict[str, Any]]:
     """
     Provides a 16-day agricultural weather forecast, analysis, and crop-specific recommendations.
     """
     if not OWM_API_KEY:
         raise ValueError("OpenWeatherMap API key (OWM_API_KEY) is not set in environment variables.")
 
-    # =================================================================
-    # 1. HELPER FUNCTIONS (Internal to this tool)
-    # =================================================================
-    def get_coords(district_name: str, limit: int = 5) -> tuple[float, float]:
+    # --- Internal Helper Functions ---
+
+    def get_coords(district_name: str) -> tuple[float, float]:
         url = "http://api.openweathermap.org/geo/1.0/direct"
-        params = {"q": district_name, "limit": limit, "appid": OWM_API_KEY}
+        params = {"q": district_name, "limit": 1, "appid": OWM_API_KEY}
         resp = requests.get(url, params=params, timeout=15)
         resp.raise_for_status()
         results = resp.json()
@@ -66,13 +62,12 @@ def get_agri_weather_forecast(district: str, crop_name: str) -> Dict[str, Any]:
                 continue
         return " | ".join(recs) if recs else "Conditions favorable."
 
-    # =================================================================
-    # 2. DATA FETCHING AND PROCESSING
-    # =================================================================
+    # --- Main Logic ---
+
     try:
         lat, lon = get_coords(district)
     except (requests.RequestException, ValueError) as e:
-        return {"error": str(e)}
+        return [{"error": str(e)}]
 
     # Fetch weather data
     url_daily = (f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}"
@@ -90,8 +85,7 @@ def get_agri_weather_forecast(district: str, crop_name: str) -> Dict[str, Any]:
         hourly_resp.raise_for_status()
         hourly_data = hourly_resp.json().get("hourly", {})
     except requests.RequestException as e:
-        return {"error": f"Failed to fetch weather data: {e}"}
-
+        return [{"error": f"Failed to fetch weather data: {e}"}]
 
     # Create DataFrame
     df = pd.DataFrame({
@@ -104,7 +98,7 @@ def get_agri_weather_forecast(district: str, crop_name: str) -> Dict[str, Any]:
     })
 
     if df.empty:
-        return {"error": "Could not construct DataFrame from weather API response."}
+        return [{"error": "Could not construct DataFrame from weather API response."}]
 
     df2 = pd.DataFrame({'date': hourly_data.get('time', []), 'humidity': hourly_data.get('relative_humidity_2m', [])})
     df2["date"] = pd.to_datetime(df2["date"]).dt.strftime("%Y-%m-%d")
@@ -112,9 +106,7 @@ def get_agri_weather_forecast(district: str, crop_name: str) -> Dict[str, Any]:
     df = df.merge(humidity_daily, on="date", how="left")
     df['humidity'] = df['humidity'].fillna(method='ffill').fillna(method='bfill')
 
-    # =================================================================
-    # 3. AGRICULTURAL ANALYSIS & RECOMMENDATIONS
-    # =================================================================
+    # Agricultural Analysis & Recommendations
     df["temp"] = (df["temp_min"] + df["temp_max"]) / 2
     df["et0"] = 0.0023 * (df["temp_max"] - df["temp_min"])**0.5 * (df["temp"] + 17.8)
     df["aridity_index"] = df["precip_mm"] / (df["et0"] + 0.01)
@@ -128,34 +120,30 @@ def get_agri_weather_forecast(district: str, crop_name: str) -> Dict[str, Any]:
         for c in kb["crops"]:
             for alias in c.get("aliases", []): CROP_RULES[alias] = c["rules"]
     except FileNotFoundError:
-        return {"error": "crop_knowledgebase.json not found."}
+        return [{"error": "crop_knowledgebase.json not found."}]
 
     df["recommendations"] = df.apply(lambda row: crop_recommendation(row, CROP_RULES), axis=1)
 
-    # =================================================================
-    # 4. PREPARE FINAL OUTPUT FOR LLM
-    # =================================================================
-    # A. Create a high-level summary
-    summary_text = (
-        f"16-day forecast for {crop_name.title()} in {district.title()}. "
-        f"Average max temperature: {df['temp_max'].mean():.1f}°C. "
-        f"Total precipitation: {df['precip_mm'].sum():.1f} mm. "
-        f"Overall conditions appear {'favorable' if 'Red' not in ''.join(str(f) for f in df['flags']) else 'challenging'}."
-    )
+    # --- Final Output Preparation ---
+    # This is the key change: we return a clean, focused list of data.
+    
+    # 1. Select only the most useful columns for the agent
+    essential_columns = [
+        "date",
+        "temp_max",
+        "temp_min",
+        "precip_mm",
+        "humidity",
+        "wind_speed",
+        "recommendations"
+    ]
+    # Ensure all essential columns exist before selecting
+    existing_cols = [col for col in essential_columns if col in df.columns]
+    df_essential = df[existing_cols].copy()
 
-    # B. Extract key insights (critical warnings)
-    critical_warnings = []
-    for index, row in df.iterrows():
-        if "RED" in row["recommendations"] or any("Red" in flag for flag in row["flags"].values()):
-            critical_warnings.append(f"On {row['date']}: {row['recommendations']}")
-
-    # C. Convert full dataframe to JSON records
-    # We round the floats to make the output cleaner for the LLM
-    df_rounded = df.round(2)
-    daily_forecast_json = df_rounded.to_dict(orient='records')
-
-    return {
-        "summary": summary_text,
-        "key_insights": critical_warnings if critical_warnings else ["No critical warnings identified. Conditions are generally stable."],
-        "daily_forecast": daily_forecast_json
-    }
+    # 2. Round the numeric values to keep the output clean
+    numeric_cols = df_essential.select_dtypes(include=np.number).columns
+    df_essential[numeric_cols] = df_essential[numeric_cols].round(1)
+    
+    # 3. Return the clean data directly as a list of dictionaries
+    return df_essential.to_dict(orient='records')

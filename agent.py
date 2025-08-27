@@ -5,15 +5,18 @@ import json
 from langchain.tools import StructuredTool
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.agents import AgentExecutor, create_tool_calling_agent
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder # <-- CHANGE #1: New Import
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from dotenv import load_dotenv
-from langchain.memory import ConversationBufferMemory # <-- CHANGE #2: New Import
+from langchain.memory import ConversationBufferWindowMemory
 
+# Load all environment variables from .env file
 load_dotenv()
+
+# The base URL of your running MCP Server (FastAPI app)
 SERVER_URL = "http://127.0.0.1:8000"
 
-# --- Tool Functions with CORRECTED Signatures ---
-# --- CHANGE #3: Functions now accept arguments directly, not as a Pydantic object ---
+
+# --- Tool Functions with Descriptions in Docstrings ---
 
 def get_agri_weather_forecast(district: str, crop_name: str) -> str:
     """Use this tool to get a detailed 16-day agricultural weather forecast for a specific district in India. It provides daily temperature, precipitation, humidity, and crop-specific stress warnings. Do NOT use this for current, real-time weather or historical data."""
@@ -34,7 +37,7 @@ def get_mandi_prices_today(state: str, district: str) -> str:
         return f"Error: {e}"
 
 def get_available_markets(state: str, district: str) -> str:
-    """CRITICAL FIRST STEP for finding seed dealers. Use this tool to get a list of all available markets or areas within a district that have seed dealer information. The user must choose one market from this list before you can use the 'get_dealers_for_market' tool."""
+    """CRITICAL FIRST STEP for finding seed dealers. Use this to get a list of all available markets or areas within a district that have seed dealer information. The user must choose one market from this list before you can use the 'get_dealers_for_market' tool."""
     try:
         response = requests.get(f"{SERVER_URL}/get_available_markets", params={"state": state, "district": district})
         response.raise_for_status()
@@ -51,8 +54,8 @@ def get_dealers_for_market(state: str, district: str, market: str) -> str:
     except Exception as e:
         return f"Error: {e}"
 
-# --- Tool definitions ---
-# Now we can remove the explicit `args_schema` as it's inferred from the function's type hints
+# --- Tool definitions using the robust StructuredTool class ---
+# It automatically infers the name, description, and arguments from the function definitions
 tools = [
     StructuredTool.from_function(func=get_agri_weather_forecast),
     StructuredTool.from_function(func=get_mandi_prices_today),
@@ -63,28 +66,29 @@ tools = [
 # --- Agent Setup ---
 llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash-latest", temperature=0)
 
-# --- CHANGE #4: Update the prompt to include a placeholder for chat history ---
+# The prompt now includes a placeholder for memory
 prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are a helpful and conversational farming assistant. You are located in Kanpur, Uttar Pradesh, India. Today's date is August 27, 2025. Be polite and ask for clarifying information if you need it."),
-    MessagesPlaceholder(variable_name="chat_history"), # This is where the memory will be injected
+    ("system", "You are a helpful and conversational farming assistant. You are located in Kanpur, Uttar Pradesh, India. Today's date is August 28, 2025. When asked for data from a tool, you must present the relevant data clearly. If a user asks for a list of daily data, provide it in a table format."),
+    MessagesPlaceholder(variable_name="chat_history"),
     ("human", "{input}"),
     ("placeholder", "{agent_scratchpad}"),
 ])
 
-# --- CHANGE #5: Create the memory object ---
-memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+# The memory object that stores the conversation history
+memory = ConversationBufferWindowMemory(k=5, memory_key="chat_history", return_messages=True)
 
+# Create the agent
 agent = create_tool_calling_agent(llm, tools, prompt)
 
-# --- CHANGE #6: Initialize the AgentExecutor with memory ---
+# Create the Agent Executor, which runs the agent and its tools
 agent_executor = AgentExecutor(
     agent=agent, 
     tools=tools, 
     verbose=True, 
-    memory=memory # Add the memory object here
+    memory=memory # Pass the memory object to the executor
 )
 
-# --- CHANGE #7: Update the chat loop to handle history ---
+# --- Interactive Chat Loop ---
 if __name__ == "__main__":
     print("🤖 Farming Assistant Agent is ready. Type 'quit' or 'exit' to end the session.")
     while True:
@@ -93,8 +97,7 @@ if __name__ == "__main__":
         if user_input.lower() in ["quit", "exit"]:
             print("🤖 Goodbye!")
             break
-        
-        # The invoke call now implicitly uses the memory object to get history
+            
         result = agent_executor.invoke({"input": user_input})
         
         print(f"🤖 Agent: {result['output']}")
