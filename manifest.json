@@ -1,0 +1,18 @@
+{
+    "name": "get_agri_weather_forecast",
+    "description": "Use this tool to get a detailed 16-day agricultural weather forecast for a specific district and crop. It provides daily temperature, precipitation, humidity, and wind data, along with critical stress flags (heat, cold, water, wind) and actionable farming recommendations tailored to the specified crop.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "district": {
+          "type": "string",
+          "description": "The name of the district for the forecast, e.g., 'Kanpur', 'Ludhiana'."
+        },
+        "crop_name": {
+          "type": "string",
+          "description": "The name of the crop for which to generate recommendations, e.g., 'rice', 'wheat', 'sugarcane'."
+        }
+      },
+      "required": ["district", "crop_name"]
+    }
+  }
