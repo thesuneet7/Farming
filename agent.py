@@ -2,6 +2,8 @@
 
 import requests
 import json
+import os
+from typing import Optional, List, Dict, Any
 from langchain.tools import StructuredTool
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.agents import AgentExecutor, create_tool_calling_agent
@@ -54,6 +56,124 @@ def get_dealers_for_market(state: str, district: str, market: str) -> str:
     except Exception as e:
         return f"Error: {e}"
 
+
+# In your agent.py file, replace the whole function with this one.
+
+def get_soil_testing_centers(state_code: str = "63f600f38cec41e6c9607e6b", district: Optional[str] = None) -> str:
+    """
+    Use this tool to find official government soil testing centers or laboratories in a specific district.
+    This tool is pre-configured for Uttar Pradesh. You must provide the district name.
+    For example, if the user asks for "soil testing labs in Bahraich", you should call this tool with district='Bahraich'.
+
+    Args:
+        district (str): The name of the district in Uttar Pradesh to search for.
+    """
+    url = "https://soilhealth4.dac.gov.in/"
+    headers = {"Content-Type": "application/json", "Accept": "application/json"}
+    
+    # Corrected GraphQL query to properly request nested fields
+    graphql_query = """
+    query GetTestCenters($state: String, $district: String) {
+      getTestCenters(state: $state, district: $district) {
+        name
+        address
+        email
+        STLdetails {
+          phone
+        }
+        district {
+          name
+        }
+        region {
+          state {
+            name
+          }
+          district {
+            name
+          }
+          geolocation {
+            coordinates
+          }
+        }
+      }
+    }
+    """
+
+    payload = {
+        "operationName": "GetTestCenters",
+        # Pass the 'district' variable from the function argument
+        "variables": {"state": state_code, "district": district},
+        "query": graphql_query,
+    }
+
+    try:
+        resp = requests.post(url, headers=headers, json=payload, timeout=30)
+        resp.raise_for_status()
+        data = resp.json()
+        
+        # Check for GraphQL errors in the response
+        if "errors" in data:
+            return f"Error from API: {json.dumps(data['errors'])}"
+
+        centers = data.get("data", {}).get("getTestCenters", [])
+
+        if not centers:
+            return "[]" # Return an empty JSON list if no centers are found
+
+        results: List[Dict[str, Any]] = []
+        for center in centers:
+            district_info = center.get("district", {})
+            if isinstance(district_info, dict):
+                district_name = district_info.get("name", "Unknown District")
+            else:
+                district_name = str(district_info) if district_info else "Unknown District"
+
+            region_info = center.get("region", {})
+            state_name = "N/A"
+            region_district_name = "N/A"
+            coordinates = "N/A"
+            if isinstance(region_info, dict):
+                state_info = region_info.get("state", {})
+                if isinstance(state_info, dict):
+                    state_name = state_info.get("name", "N/A")
+                region_district_info = region_info.get("district", {})
+                if isinstance(region_district_info, dict):
+                    region_district_name = region_district_info.get("name", "N/A")
+                geolocation = region_info.get("geolocation", {})
+                if isinstance(geolocation, dict) and "coordinates" in geolocation:
+                    coords = geolocation["coordinates"]
+                    if isinstance(coords, list) and len(coords) >= 2:
+                        coordinates = f"{coords[1]}, {coords[0]}"
+
+            phone = "N/A"
+            if center.get("STLdetails") and center["STLdetails"].get("phone"):
+                phone = center["STLdetails"]["phone"]
+
+            results.append(
+                {
+                    "Center_Name": center.get("name", "N/A"),
+                    "District": district_name,
+                    "State": state_name,
+                    "Email": center.get("email", "N/A"),
+                    "Phone": phone,
+                    "Address": center.get("address", "N/A"),
+                    "Region_District": region_district_name,
+                    "Coordinates": coordinates,
+                }
+            )
+        
+        # The API may return all centers for the state, so we filter them here
+        if district:
+            filtered_results = [
+                center for center in results
+                if center['District'].lower() == district.lower() or center['Region_District'].lower() == district.lower()
+            ]
+            return json.dumps(filtered_results)
+
+        return json.dumps(results)
+    except Exception as e:
+        return f"Error: {e}"
+
 # --- Tool definitions using the robust StructuredTool class ---
 # It automatically infers the name, description, and arguments from the function definitions
 tools = [
@@ -61,10 +181,22 @@ tools = [
     StructuredTool.from_function(func=get_mandi_prices_today),
     StructuredTool.from_function(func=get_available_markets),
     StructuredTool.from_function(func=get_dealers_for_market),
+    StructuredTool.from_function(func=get_soil_testing_centers),
 ]
 
 # --- Agent Setup ---
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash-latest", temperature=0)
+# Prefer API key from environment/.env over ADC to avoid DefaultCredentialsError
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+if not GOOGLE_API_KEY:
+    raise ValueError("GOOGLE_API_KEY is not set. Add it to your .env or environment.")
+
+# Force REST transport to use API key auth (gRPC often requires ADC)
+llm = ChatGoogleGenerativeAI(
+    model="gemini-1.5-flash-latest",
+    temperature=0,
+    google_api_key=GOOGLE_API_KEY,
+    transport="rest",
+)
 
 # The prompt now includes a placeholder for memory
 prompt = ChatPromptTemplate.from_messages([

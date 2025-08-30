@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+pandas
+numpy
+requests
+python-dotenv
+playwright
+langchain
+langchain-google-genai
+google-generativeai
+openpyxl
