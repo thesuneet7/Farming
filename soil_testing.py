@@ -53,7 +53,7 @@ def get_soil_testing_centers(district: Optional[str] = None) -> Dict[str, Any]:
         centers = data.get('data', {}).get('getTestCenters', [])
         
         if not centers:
-            return {"error": f"No soil testing centers found for district: {district}" if district else "No soil testing centers found"}
+            return {"data": [], "message": f"No soil testing centers found for district: {district}" if district else "No soil testing centers found"}
         
         # Process centers data
         processed_centers = []

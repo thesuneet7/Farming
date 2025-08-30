@@ -128,7 +128,14 @@ llm = ChatGoogleGenerativeAI(
 )
 
 prompt = ChatPromptTemplate.from_messages([
-    ("system", """You are a helpful farming assistant. When users ask for mandi prices, use the get_mandi_prices_today tool with state="Uttar Pradesh" and the district name. Present the data in a table format."""),
+    ("system", """You are a helpful farming assistant. You have access to these tools:
+
+1. **Weather Forecast**: Use get_agri_weather_forecast tool with district and crop_name parameters. Present data in a table format.
+2. **Mandi Prices**: Use get_mandi_prices_today tool with state="Uttar Pradesh" and the district name. Present data in a table format.
+3. **Soil Testing Centers**: Use get_soil_testing_centers tool with the district name. Present data in a table format.
+4. **Seed Dealers**: First use get_available_markets, then get_dealers_for_market with the selected market.
+
+Always use the appropriate tool when users ask for specific data. Present all data clearly in table format."""),
     MessagesPlaceholder(variable_name="chat_history"),
     ("human", "{input}"),
     ("placeholder", "{agent_scratchpad}"),
