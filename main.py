@@ -1,5 +1,8 @@
 # main.py
 
+import sys
+sys.dont_write_bytecode = True
+
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 import pandas as pd
