@@ -1,6 +1,7 @@
 # agent.py
 
 import requests
+import os
 import json
 from langchain.tools import StructuredTool
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -8,9 +9,24 @@ from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from dotenv import load_dotenv
 from langchain.memory import ConversationBufferWindowMemory
+import sys
 
 # Load all environment variables from .env file
 load_dotenv()
+
+# Get the API key from the environment variables
+api_key = os.getenv("GOOGLE_API_KEY")
+
+# Check if the key was found. If not, print an error and exit.
+if not api_key:
+    print("❌ Error: GOOGLE_API_KEY not found. Stopping the script.")
+      # <--- This is the command to stop the script
+
+# This part of the code will ONLY run if the API key was found
+print("✅ API Key loaded successfully. Continuing with the script...")
+print(f"The loaded API key is: {api_key}")
+
+
 
 # The base URL of your running MCP Server (FastAPI app)
 SERVER_URL = "http://127.0.0.1:8000"
