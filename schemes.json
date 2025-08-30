@@ -1,0 +1,149 @@
+[
+  {
+    "name": "Agriculture Infrastructure Fund (AIF)",
+    "scheme_type": "use_based",
+    "eligible_entities": ["Farmer", "FPO", "PACS", "SHG", "JLG", "Cooperative", "Agri-entrepreneur", "Startup", "APMC", "State Agency"],
+    "eligible_projects": ["Warehouse", "Cold Storage", "Food Processing", "Custom Hiring Center", "Drones", "Precision Farming", "Solar Pump", "Logistics", "Processing Units"],
+    "benefit": "Loan up to ₹2 crore with 3% interest subvention for 7 years and credit guarantee coverage",
+    "documents": ["Aadhar Card", "PAN Card", "Project Report", "Bank Account", "Land/Business Ownership Proof"],
+    "link": "https://www.agriinfra.dac.gov.in/"
+  },
+  {
+    "name": "PM-Kisan Samman Nidhi",
+    "scheme_type": "demographic",
+    "age_min": 0,
+    "age_max": 120,
+    "income_max": 600000,
+    "land_max": null,
+    "category": "All",
+    "benefit": "₹6,000 per year income support (in 3 installments) for small/marginal farmers",
+    "documents": ["Aadhar Card", "Bank Account", "Landholding papers"],
+    "link": "https://pmkisan.gov.in/"
+  },
+  {
+    "name": "ATMA (Agricultural Technology Management Agency)",
+    "scheme_type": "use_based",
+    "eligible_entities": ["Farmer", "FPO", "Extension Worker"],
+    "eligible_projects": ["Training", "Farmer Field School", "Exposure Visit", "Demonstration"],
+    "benefit": "Capacity building, training and extension support",
+    "documents": ["Aadhar Card", "Farmer ID", "Landholding proof"],
+    "link": "https://www.myscheme.gov.in/schemes/atma"
+  },
+  {
+    "name": "AGMARKNET",
+    "scheme_type": "use_based",
+    "eligible_entities": ["Farmer", "Trader", "APMC"],
+    "eligible_projects": ["Market Information Access"],
+    "benefit": "Real-time access to agricultural market prices through ICT network",
+    "documents": ["Mobile/Computer Access"],
+    "link": "https://agmarknet.gov.in/"
+  },
+  {
+    "name": "Horticulture Mission (MIDH)",
+    "scheme_type": "use_based",
+    "eligible_entities": ["Farmer", "FPO", "Cooperative", "State Agency"],
+    "eligible_projects": ["Horticulture Development", "Protected Cultivation", "Post-Harvest Infra"],
+    "benefit": "Financial support for horticulture crop production and value chain development",
+    "documents": ["Landholding proof", "Aadhar Card", "Project proposal"],
+    "link": "https://midh.gov.in/"
+  },
+  {
+    "name": "Online Pesticide Registration",
+    "scheme_type": "use_based",
+    "eligible_entities": ["Pesticide Manufacturer", "Importer", "Dealer"],
+    "eligible_projects": ["Pesticide Registration"],
+    "benefit": "Legal approval for manufacture, import or sale of pesticides in India",
+    "documents": ["Application Form", "Product details", "Lab reports"],
+    "link": "https://www.cibrc.gov.in/"
+  },
+  {
+    "name": "Plant Quarantine Clearance",
+    "scheme_type": "use_based",
+    "eligible_entities": ["Importer", "Exporter"],
+    "eligible_projects": ["Import Clearance", "Export Clearance"],
+    "benefit": "Clearance certificate for international trade of plants and plant products",
+    "documents": ["Application Form", "Phytosanitary Certificate"],
+    "link": "http://plantquarantineindia.nic.in/"
+  },
+  {
+    "name": "Direct Benefit Transfer (DBT) in Agriculture",
+    "scheme_type": "demographic",
+    "age_min": 0,
+    "age_max": 120,
+    "income_max": null,
+    "land_max": null,
+    "category": "All",
+    "benefit": "Direct transfer of subsidies and benefits into farmers' bank accounts",
+    "documents": ["Aadhar Card", "Bank Account"],
+    "link": "https://agricoop.nic.in/"
+  },
+  {
+    "name": "Pradhan Mantri Krishi Sinchayee Yojana (PMKSY)",
+    "scheme_type": "use_based",
+    "eligible_entities": ["Farmer", "FPO", "State Agency", "Cooperative"],
+    "eligible_projects": ["Irrigation Infrastructure", "Watershed Development", "Micro-irrigation"],
+    "benefit": "Efficient water use, irrigation facilities, watershed development",
+    "documents": ["Landholding papers", "Project proposal"],
+    "link": "https://pmksy.gov.in/"
+  },
+  {
+    "name": "Kisan Call Center (KCC)",
+    "scheme_type": "use_based",
+    "eligible_entities": ["Farmer"],
+    "eligible_projects": ["Farming Advisory"],
+    "benefit": "Toll-free helpline for expert advice on farming queries",
+    "documents": ["Farmer ID (for record)"],
+    "link": "http://dackkms.gov.in/Account/KisanCallCenter.aspx"
+  },
+  {
+    "name": "mKisan",
+    "scheme_type": "use_based",
+    "eligible_entities": ["Farmer"],
+    "eligible_projects": ["Mobile Advisory"],
+    "benefit": "Weather, crop and market advisories through SMS, IVRS, mobile app",
+    "documents": ["Registered Mobile Number"],
+    "link": "https://mkisan.gov.in/"
+  },
+  {
+    "name": "Jaivik Kheti Portal",
+    "scheme_type": "use_based",
+    "eligible_entities": ["Organic Farmer", "Consumer", "Trader"],
+    "eligible_projects": ["Organic Produce Marketing"],
+    "benefit": "Online marketplace for organic farming produce",
+    "documents": ["Registration ID", "Organic certification (if applicable)"],
+    "link": "https://www.jaivikkheti.in/"
+  },
+  {
+    "name": "e-NAM (National Agriculture Market)",
+    "scheme_type": "use_based",
+    "eligible_entities": ["Farmer", "Trader", "APMC"],
+    "eligible_projects": ["Online Agri-Trade"],
+    "benefit": "Transparent online trading platform for agri-produce across India",
+    "documents": ["Farmer ID", "Trader license"],
+    "link": "https://enam.gov.in/"
+  },
+  {
+    "name": "Soil Health Card Scheme",
+    "scheme_type": "demographic",
+    "age_min": 0,
+    "age_max": 120,
+    "income_max": null,
+    "land_max": null,
+    "category": "All",
+    "benefit": "Soil testing and personalized fertilizer recommendations for farmers",
+    "documents": ["Landholding proof", "Soil sample"],
+    "link": "https://soilhealth.dac.gov.in/"
+  },
+  {
+    "name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    "scheme_type": "demographic",
+    "age_min": 0,
+    "age_max": 120,
+    "income_max": null,
+    "land_max": null,
+    "category": "All",
+    "benefit": "Subsidized crop insurance against natural calamities and risks",
+    "documents": ["Aadhar Card", "Landholding papers", "Crop sowing certificate"],
+    "link": "https://pmfby.gov.in/"
+  }
+]
