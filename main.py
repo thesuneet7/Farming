@@ -25,11 +25,10 @@ def read_root():
 # --- Weather Tool Endpoint ---
 @app.get("/get_agri_weather_forecast", tags=["Farming Tools"])
 def agri_weather_endpoint(district: str, crop_name: str):
-    # This block MUST be indented
     try:
         result = get_agri_weather_forecast(district=district, crop_name=crop_name)
-        if "error" in result:
-            raise HTTPException(status_code=400, detail=result["error"])
+        if isinstance(result, list) and len(result) > 0 and "error" in result[0]:
+            raise HTTPException(status_code=400, detail=result[0]["error"])
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An internal server error occurred: {str(e)}")
@@ -37,7 +36,6 @@ def agri_weather_endpoint(district: str, crop_name: str):
 # --- Seed Dealer Tool Endpoints ---
 @app.get("/get_available_markets", tags=["Farming Tools"])
 async def available_markets_endpoint(state: str, district: str):
-    # This block MUST be indented
     try:
         markets = await get_available_markets(state_name=state, district_name=district)
         if not markets:
@@ -49,7 +47,6 @@ async def available_markets_endpoint(state: str, district: str):
 
 @app.get("/get_dealers_for_market", tags=["Farming Tools"])
 async def dealers_for_market_endpoint(state: str, district: str, market: str):
-    # This block MUST be indented
     try:
         df = await get_dealers_for_market(state_name=state, district_name=district, market_name=market)
         if df.empty:
@@ -63,10 +60,9 @@ async def dealers_for_market_endpoint(state: str, district: str, market: str):
 # --- Mandi Price Tool Endpoint ---
 @app.get("/get_mandi_prices_today", tags=["Farming Tools"])
 def mandi_prices_endpoint(state: str, district: str):
-    # This block MUST be indented
     try:
         result = get_mandi_prices_today(state=state, district=district)
-        if "error" in result:
+        if isinstance(result, dict) and "error" in result:
             raise HTTPException(status_code=400, detail=result["error"])
         return result
     except Exception as e:
