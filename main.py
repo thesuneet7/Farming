@@ -3,11 +3,13 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 import pandas as pd
+import uvicorn
 
-# Import tools from all three files
+# Import tools from all files
 from agri_weather import get_agri_weather_forecast
 from dealer_tool import get_available_markets, get_dealers_for_market
 from mandi_tool import get_mandi_prices_today
+from soil_testing import get_soil_testing_centers
 
 app = FastAPI(
     title="AI Farming Agent Tools",
@@ -69,3 +71,18 @@ def mandi_prices_endpoint(state: str, district: str):
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An internal server error occurred: {str(e)}")
+
+# --- Soil Testing Tool Endpoint ---
+@app.get("/get_soil_testing_centers", tags=["Farming Tools"])
+def soil_testing_endpoint(district: str = None):
+    """API endpoint to get soil testing centers."""
+    try:
+        result = get_soil_testing_centers(district=district)
+        if "error" in result:
+            raise HTTPException(status_code=400, detail=result["error"])
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An internal server error occurred: {str(e)}")
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=8000)
