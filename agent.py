@@ -4,7 +4,7 @@ import requests
 import os
 import json
 from langchain.tools import StructuredTool
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from dotenv import load_dotenv
@@ -15,7 +15,7 @@ import sys
 load_dotenv()
 
 # Get the API key from the environment variables
-api_key = os.getenv("GOOGLE_API_KEY")
+api_key = os.getenv("GROQ_API_KEY")
 
 # Check if the key was found. If not, print an error and exit.
 if not api_key:
@@ -80,7 +80,13 @@ tools = [
 ]
 
 # --- Agent Setup ---
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash-latest", temperature=0)
+# --- Agent Setup ---
+# --- Agent Setup ---
+llm = ChatGroq(   # keep key in .env
+    model="meta-llama/llama-4-scout-17b-16e-instruct",              # Groq model name for Llama 4 Scout
+    temperature=0
+)
+
 
 # The prompt now includes a placeholder for memory
 prompt = ChatPromptTemplate.from_messages([
