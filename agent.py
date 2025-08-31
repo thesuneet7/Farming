@@ -35,7 +35,7 @@ SERVER_URL = "http://127.0.0.1:8000"
 # --- Tool Functions with Descriptions in Docstrings ---
 
 def get_agri_weather_forecast(district: str, crop_name: str) -> str:
-    """Use this tool to get a detailed 16-day agricultural weather forecast for a specific district in India. It provides daily temperature, precipitation, humidity, and crop-specific stress warnings. Do NOT use this for current, real-time weather or historical data."""
+    """Use this tool to get a detailed 16-day agricultural weather forecast for a specific district in India. It provides daily temperature, precipitation, humidity, and crop-specific stress warnings. Just warn user that this is a forecast and might not be fully accurate but good for taking precautions"""
     try:
         response = requests.get(f"{SERVER_URL}/get_agri_weather_forecast", params={"district": district, "crop_name": crop_name})
         response.raise_for_status()
@@ -44,7 +44,7 @@ def get_agri_weather_forecast(district: str, crop_name: str) -> str:
         return f"Error: {e}"
 
 def get_mandi_prices_today(state: str, district: str) -> str:
-    """Use this tool ONLY for getting official mandi (agricultural market) prices for the CURRENT DAY from government sources in India. It returns a list of commodities with their prices for a given state and district. Do NOT use this for historical prices or future price predictions."""
+    """Use this tool ONLY for getting official mandi (agricultural market) prices for the CURRENT DAY from government sources in India. It returns a list of commodities with their prices for a given state and district."""
     try:
         response = requests.get(f"{SERVER_URL}/get_mandi_prices_today", params={"state": state, "district": district})
         response.raise_for_status()
