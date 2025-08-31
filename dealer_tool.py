@@ -61,7 +61,7 @@ async def get_dealers_for_market(state_name: str, district_name: str, market_nam
     """
     async with async_playwright() as p:
         # We'll keep this visible for now so you can confirm the fix
-        browser = await p.chromium.launch(headless=False, slow_mo=500)
+        browser = await p.chromium.launch(headless=True)
         context = await browser.new_context(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
         )
