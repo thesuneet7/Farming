@@ -9,6 +9,7 @@ from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from dotenv import load_dotenv
 from langchain.memory import ConversationBufferWindowMemory
+from typing import Optional
 import sys
 
 # Load all environment variables from .env file
@@ -34,10 +35,17 @@ SERVER_URL = "http://127.0.0.1:8000"
 
 # --- Tool Functions with Descriptions in Docstrings ---
 
-def get_agri_weather_forecast(district: str, crop_name: str) -> str:
-    """Use this tool to get a detailed 16-day agricultural weather forecast for a specific district in India. It provides daily temperature, precipitation, humidity, and crop-specific stress warnings. Just warn user that this is a forecast and might not be fully accurate but good for taking precautions"""
+# <-- 1. UPDATED THE FUNCTION SIGNATURE AND DOCSTRING -->
+def get_agri_weather_forecast(district: str, crop_name: Optional[str] = None) -> str:
+    """
+    Use this tool to get a 16-day agricultural weather forecast. Providing just a 'district' returns a general weather outlook. Adding the optional 'crop_name' provides detailed, crop-specific advice and stress warnings. Always inform the user that this is a forecast and not guaranteed to be 100% accurate. Always generate the full data and then analyze and return what the user wants. For example they could ask for 10 days forecast - just  generate the whole df and then read the json file and return only the required data
+    """
     try:
-        response = requests.get(f"{SERVER_URL}/get_agri_weather_forecast", params={"district": district, "crop_name": crop_name})
+        params = {"district": district}
+        if crop_name:
+            params["crop_name"] = crop_name
+
+        response = requests.get(f"{SERVER_URL}/get_agri_weather_forecast", params=params)
         response.raise_for_status()
         return json.dumps(response.json())
     except Exception as e:
