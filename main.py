@@ -15,6 +15,7 @@ from weather_service import get_weather_data
 from crop_service import get_crop_recommendation
 from dealer_tool import get_available_markets, get_dealers_for_market
 from mandi_tool import get_mandi_prices_today
+from schemes import get_personalised_schemes
 
 app = FastAPI(
     title="AI Farming Agent Tools",
@@ -103,3 +104,20 @@ def mandi_prices_endpoint(state: str, district: str):
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An internal server error occurred: {str(e)}")
+    
+# --- Personalised Schemes Endpoint ---
+@app.get("/get_personalised_schemes", tags=["Farming Tools"])
+def personalised_schemes_endpoint(
+    age: int,
+    gender: Optional[str] = None,
+    land: Optional[float] = None,
+    income: Optional[float] = None,
+):
+    """
+    Returns personalised government schemes based on farmer profile.
+    """
+    try:
+        eligible_schemes = get_personalised_schemes(age, gender, land, income)
+        return {"eligible_schemes": eligible_schemes}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error checking schemes: {str(e)}")

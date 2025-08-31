@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 from langchain.memory import ConversationBufferWindowMemory
 from typing import Optional
 import sys
+import re
 
 # Load all environment variables from .env file
 load_dotenv()
@@ -77,6 +78,32 @@ def get_dealers_for_market(state: str, district: str, market: str) -> str:
         return json.dumps(response.json())
     except Exception as e:
         return f"Error: {e}"
+    
+
+def _parse_number(value: str, default: float = 0.0) -> float:
+    """Extract first number from string, return default if none."""
+    if value is None:
+        return default
+    match = re.search(r"[\d.]+", str(value))
+    return float(match.group()) if match else default
+
+def get_personalised_schemes(age: str, gender: Optional[str] = None, land: Optional[str] = None, income: Optional[str] = None) -> str:
+    """
+    Use this tool to find personalised government schemes for farmers.
+    Inputs may include text like '1.5 hectares' or '200000 INR', which will be parsed into numbers.
+    """
+    try:
+        age_num = int(_parse_number(age))
+        land_num = _parse_number(land)
+        income_num = _parse_number(income)
+        gender_clean = gender.lower() if gender else None
+
+        params = {"age": age_num, "gender": gender_clean, "land": land_num, "income": income_num}
+        response = requests.get(f"{SERVER_URL}/get_personalised_schemes", params=params)
+        response.raise_for_status()
+        return json.dumps(response.json(), ensure_ascii=False, indent=2)
+    except Exception as e:
+        return f"Error: {e}"
 
 # --- Tool definitions using the robust StructuredTool class ---
 # It automatically infers the name, description, and arguments from the function definitions
@@ -85,6 +112,7 @@ tools = [
     StructuredTool.from_function(func=get_mandi_prices_today),
     StructuredTool.from_function(func=get_available_markets),
     StructuredTool.from_function(func=get_dealers_for_market),
+    StructuredTool.from_function(func=get_personalised_schemes),
 ]
 
 # --- Agent Setup ---
