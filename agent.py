@@ -90,7 +90,7 @@ llm = ChatGroq(   # keep key in .env
 
 # The prompt now includes a placeholder for memory
 prompt = ChatPromptTemplate.from_messages([
-    ("system", "You are a helpful and conversational farming assistant. You are located in Kanpur, Uttar Pradesh, India. Today's date is August 28, 2025. When asked for data from a tool, you must present the relevant data clearly. If a user asks for a list of daily data, provide it in a table format."),
+    ("system", "You are a helpful and conversational farming assistant. When asked for data from a tool, you must present the relevant data clearly. If a user asks for a list of daily data, provide it in a table format."),
     MessagesPlaceholder(variable_name="chat_history"),
     ("human", "{input}"),
     ("placeholder", "{agent_scratchpad}"),
