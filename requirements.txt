@@ -7,3 +7,4 @@ requests
 langchain
 langchain_groq
 langchain_core
+playwright
