@@ -30,7 +30,7 @@ print(f"The loaded API key is: {api_key}")
 
 
 # The base URL of your running MCP Server (FastAPI app)
-SERVER_URL = "http://127.0.0.1:8000"
+SERVER_URL = "https://farming-5zdc.onrender.com/"
 
 
 # --- Tool Functions with Descriptions in Docstrings ---
