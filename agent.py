@@ -115,23 +115,35 @@ prompt = ChatPromptTemplate.from_messages([
 ])
 
 # The memory object that stores the conversation history
-memory = ConversationBufferWindowMemory(k=5, memory_key="chat_history", return_messages=True)
+# memory = ConversationBufferWindowMemory(k=5, memory_key="chat_history", return_messages=True)
 
 # Create the agent
 agent = create_tool_calling_agent(llm, tools, prompt)
 
 # Create the Agent Executor, which runs the agent and its tools
-agent_executor = AgentExecutor(
+'''agent_executor = AgentExecutor(
     agent=agent, 
     tools=tools, 
     verbose=True, 
     memory=memory # Pass the memory object to the executor
-)
+)'''
 
-# --- New Chat Endpoint ---
+# --- New Chat Endpoint (Corrected) ---
 @app.post("/chat")
 async def chat_endpoint(request: ChatRequest):
     try:
+        # Re-create the memory object for each request.
+        # This makes the endpoint stateless, but prevents conversation mix-ups.
+        memory = ConversationBufferWindowMemory(k=5, memory_key="chat_history", return_messages=True)
+        
+        # Re-create the agent executor for each request to use the new memory.
+        agent_executor = AgentExecutor(
+            agent=agent, 
+            tools=tools, 
+            verbose=True, 
+            memory=memory
+        )
+
         result = await agent_executor.invoke({"input": request.input})
         return {"output": result["output"]}
     except Exception as e:
