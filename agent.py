@@ -1,5 +1,7 @@
 # agent.py
 
+import sys
+sys.dont_write_bytecode = True
 import requests
 import os
 import json
@@ -9,8 +11,9 @@ from langchain.agents import AgentExecutor, create_tool_calling_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from dotenv import load_dotenv
 from langchain.memory import ConversationBufferWindowMemory
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 from typing import Optional
-import sys
 
 # Load all environment variables from .env file
 load_dotenv()
@@ -31,6 +34,13 @@ print(f"The loaded API key is: {api_key}")
 
 # The base URL of your running MCP Server (FastAPI app)
 SERVER_URL = "https://farming-5zdc.onrender.com/"
+
+# --- New FastAPI App for the Agent ---
+app = FastAPI(title="AI Farming Agent Service")
+
+# Pydantic model for the request body
+class ChatRequest(BaseModel):
+    input: str
 
 
 # --- Tool Functions with Descriptions in Docstrings ---
@@ -118,16 +128,11 @@ agent_executor = AgentExecutor(
     memory=memory # Pass the memory object to the executor
 )
 
-# --- Interactive Chat Loop ---
-if __name__ == "__main__":
-    print("🤖 Farming Assistant Agent is ready. Type 'quit' or 'exit' to end the session.")
-    while True:
-        user_input = input("You: ")
-        
-        if user_input.lower() in ["quit", "exit"]:
-            print("🤖 Goodbye!")
-            break
-            
-        result = agent_executor.invoke({"input": user_input})
-        
-        print(f"🤖 Agent: {result['output']}")
+# --- New Chat Endpoint ---
+@app.post("/chat")
+async def chat_endpoint(request: ChatRequest):
+    try:
+        result = await agent_executor.invoke({"input": request.input})
+        return {"output": result["output"]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
