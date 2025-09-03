@@ -61,6 +61,7 @@ def get_mandi_prices_today(state: str, district: str) -> str:
     except Exception as e:
         return f"Error: {e}"
 
+'''
 def get_available_markets(state: str, district: str) -> str:
     """CRITICAL FIRST STEP for finding seed dealers. Use this to get a list of all available markets or areas within a district that have seed dealer information. The user must choose one market from this list before you can use the 'get_dealers_for_market' tool."""
     try:
@@ -78,7 +79,7 @@ def get_dealers_for_market(state: str, district: str, market: str) -> str:
         return json.dumps(response.json())
     except Exception as e:
         return f"Error: {e}"
-    
+'''    
 
 def _parse_number(value: str, default: float = 0.0) -> float:
     """Extract first number from string, return default if none."""
@@ -104,15 +105,49 @@ def get_personalised_schemes(age: str, gender: Optional[str] = None, land: Optio
         return json.dumps(response.json(), ensure_ascii=False, indent=2)
     except Exception as e:
         return f"Error: {e}"
+    
+def get_dealers_for_market(state: str, district: str, market: str) -> str:
+    """
+    Tool: returns top 5 dealers for a given state/district/market and saves CSV with all dealers.
+    """
+    try:
+        params = {"state": state, "district": district, "market": market}
+        resp = requests.get(f"{SERVER_URL}/get_dealers_for_market", params=params, timeout=180)
+        resp.raise_for_status()
+        result = resp.json()
 
+        # Format output
+        top5 = result.get("top5", [])
+        csv_path = result.get("csv")
+
+        if not top5:
+            return f"No dealers found for {district}, {market}, {state}."
+
+        # Make a readable message
+        msg = [f"Top {len(top5)} seed dealers in {market}, {district}, {state}:"]
+        for dealer in top5:
+            # Try to pull useful fields if available
+            name = dealer.get("Dealer name") or dealer.get("Dealer") or dealer.get("dealer name") or "Unknown"
+            mobile = dealer.get("Mobile No") or "-"
+            address = dealer.get("Address") or "-"
+            msg.append(f"- {name}, Mobile: {mobile}, Address: {address}")
+
+        if csv_path:
+            msg.append(f"\n📂 Full list saved to: {csv_path}")
+
+        return "\n".join(msg)
+
+    except Exception as e:
+        return f"Error: {e}"
+
+        
 # --- Tool definitions using the robust StructuredTool class ---
 # It automatically infers the name, description, and arguments from the function definitions
 tools = [
     StructuredTool.from_function(func=get_agri_weather_forecast),
     StructuredTool.from_function(func=get_mandi_prices_today),
-    StructuredTool.from_function(func=get_available_markets),
-    StructuredTool.from_function(func=get_dealers_for_market),
     StructuredTool.from_function(func=get_personalised_schemes),
+    StructuredTool.from_function(func=get_dealers_for_market),
 ]
 
 # --- Agent Setup ---
@@ -159,3 +194,4 @@ if __name__ == "__main__":
         result = agent_executor.invoke({"input": user_input})
         
         print(f"🤖 Agent: {result['output']}")
+

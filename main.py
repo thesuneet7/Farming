@@ -7,21 +7,29 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 import pandas as pd
 import numpy as np
-from typing import Optional
+from typing import Optional, List, Dict, Any
+from fastapi import BackgroundTasks
+import asyncio
+import concurrent.futures
+
 
 # Import tools from all three files
 # from agri_weather import get_agri_weather_forecast
 from weather_service import get_weather_data
 from crop_service import get_crop_recommendation
-from dealer_tool import get_available_markets, get_dealers_for_market
+#from dealer_tool import get_available_markets, get_dealers_for_market
 from mandi_tool import get_mandi_prices_today
 from schemes import get_personalised_schemes
+from seed_dealer import get_top5_and_csv
 
 app = FastAPI(
     title="AI Farming Agent Tools",
     description="An MCP-compatible server providing tools for agricultural analysis.",
     version="1.0.0",
 )
+
+# Global executor for running blocking tasks
+executor = concurrent.futures.ThreadPoolExecutor(max_workers=3)
 
 # --- Health Check Endpoint ---
 @app.get("/", tags=["Health Check"])
@@ -67,6 +75,7 @@ def agri_weather_endpoint(district: str, crop_name: Optional[str] = None):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An internal server error occurred: {str(e)}")
 
+'''
 # --- Seed Dealer Tool Endpoints ---
 @app.get("/get_available_markets", tags=["Farming Tools"])
 async def available_markets_endpoint(state: str, district: str):
@@ -92,7 +101,8 @@ async def dealers_for_market_endpoint(state: str, district: str, market: str):
         return df.to_dict(orient="records")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An internal server error occurred: {str(e)}")
-
+'''
+        
 # --- Mandi Price Tool Endpoint ---
 @app.get("/get_mandi_prices_today", tags=["Farming Tools"])
 def mandi_prices_endpoint(state: str, district: str):
@@ -121,3 +131,18 @@ def personalised_schemes_endpoint(
         return {"eligible_schemes": eligible_schemes}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error checking schemes: {str(e)}")
+    
+
+# --- Seed Dealer Scraping Endpoint Using Playwright ---
+@app.get("/get_dealers_for_market", tags=["Farming Tools"])
+async def dealers_for_market_endpoint(state: str, district: str, market: str):
+    """
+    Returns top 5 seed dealers + saves all dealers in CSV.
+    """
+    try:
+        result = await get_top5_and_csv(state, district, market, filename=f"dealers_{state}_{district}_{market}.csv")
+        if not result["top5"]:
+            raise Exception("No dealers found.")
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Scraping error: {str(e)}")
